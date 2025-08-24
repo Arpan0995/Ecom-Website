@@ -27,4 +27,9 @@ public class CategoryController {
     public String putCategory(@RequestBody Category category) {
         return categoryService.putCategory(category);
     }
+
+    @DeleteMapping("api/admin/delete/{id}")
+    public String deleteCategory(@PathVariable Integer id) {
+        return categoryService.deleteCategory(id);
+    }
 }
