@@ -1,7 +1,10 @@
 package com.ecom.web.service;
 
 import com.ecom.web.model.Category;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +16,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category getCategory(Integer id) {
         Category category1 =  categoryList.stream().filter(category -> category.getCategoryId().equals(id.longValue()))
-                .findFirst().orElse(null);
-        if (category1 == null) {
-            return null;
-        } else {
-            return category1;
-        }
+                .findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+       return category1;
     }
 
     public List<Category> getCategories() {
@@ -34,12 +33,8 @@ public class CategoryServiceImpl implements CategoryService {
     public String deleteCategory(Integer id) {
         String message;
         Category category = getCategory(id);
-        if (category != null) {
-            categoryList.remove(category);
-            message = "Category deleted successfully";
-        } else {
-            message = "Category not found";
-        }
+        categoryList.remove(category);
+        message = "Category with id " + id + " deleted successfully";
         return message;
     }
 }

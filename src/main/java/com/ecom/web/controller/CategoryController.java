@@ -3,7 +3,10 @@ package com.ecom.web.controller;
 import com.ecom.web.model.Category;
 import com.ecom.web.service.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -14,8 +17,14 @@ public class CategoryController {
     private CategoryServiceImpl categoryService;
 
     @GetMapping("/api/public/category/{id}")
-    public Category getCategory(@PathVariable Integer id) {
-        return categoryService.getCategory(id);
+    public ResponseEntity<Category> getCategory(@PathVariable Integer id) {
+        try {
+            Category category = categoryService.getCategory(id);
+            return new ResponseEntity<>(category, HttpStatus.OK);
+        } catch (ResponseStatusException e) {
+            return new ResponseEntity<>(e.getStatusCode());
+        }
+
     }
 
     @GetMapping("/api/public/categories")
@@ -29,7 +38,12 @@ public class CategoryController {
     }
 
     @DeleteMapping("api/admin/delete/{id}")
-    public String deleteCategory(@PathVariable Integer id) {
-        return categoryService.deleteCategory(id);
+    public ResponseEntity<String> deleteCategory(@PathVariable Integer id) {
+        try {
+            String status =  categoryService.deleteCategory(id);
+            return new ResponseEntity<>(status, HttpStatus.OK);
+        } catch (ResponseStatusException e) {
+            return new ResponseEntity<>(e.getReason(),e.getStatusCode());
+        }
     }
 }
