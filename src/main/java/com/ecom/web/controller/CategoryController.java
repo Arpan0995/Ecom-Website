@@ -28,13 +28,19 @@ public class CategoryController {
     }
 
     @GetMapping("/api/public/categories")
-    public List<Category> getCategories() {
-        return categoryService.getCategories();
+    public ResponseEntity<List<Category>> getCategories() {
+        List<Category> categories =  categoryService.getCategories();
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
     @PostMapping("api/admin/category")
-    public String putCategory(@RequestBody Category category) {
-        return categoryService.putCategory(category);
+    public ResponseEntity<String> addCategory(@RequestBody Category category) {
+        try {
+            String message = categoryService.addCategory(category);
+            return new ResponseEntity<>(message,HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping("api/admin/delete/{id}")

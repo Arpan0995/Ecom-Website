@@ -24,7 +24,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryList;
     }
 
-    public String putCategory(Category category) {
+    public String addCategory(Category category) {
         categoryList.add(category);
         return "Category added successfully";
     }
