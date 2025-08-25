@@ -52,4 +52,15 @@ public class CategoryController {
             return new ResponseEntity<>(e.getReason(),e.getStatusCode());
         }
     }
+
+    @PutMapping("api/admin/category/update")
+    public ResponseEntity<String> updateCategory(@RequestBody Category category) {
+        try {
+            String message = categoryService.updateCategory(category);
+            return new ResponseEntity<>(message,HttpStatus.OK);
+        } catch (ResponseStatusException e) {
+            return new ResponseEntity<>(e.getReason(),e.getStatusCode());
+        }
+    }
+
 }

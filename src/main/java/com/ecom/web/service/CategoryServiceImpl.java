@@ -2,7 +2,6 @@ package com.ecom.web.service;
 
 import com.ecom.web.model.Category;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -36,5 +35,12 @@ public class CategoryServiceImpl implements CategoryService {
         categoryList.remove(category);
         message = "Category with id " + id + " deleted successfully";
         return message;
+    }
+
+    @Override
+    public String updateCategory(Category category) {
+        Category category1 = getCategory(category.getCategoryId().intValue());
+        category1.setCategoryName(category.getCategoryName());
+        return "Category updated successfully";
     }
 }

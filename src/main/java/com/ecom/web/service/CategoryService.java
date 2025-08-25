@@ -10,4 +10,5 @@ public interface CategoryService {
     List<Category> getCategories();
     String addCategory(com.ecom.web.model.Category category);
     String deleteCategory(Integer id);
+    String updateCategory(Category category);
 }
