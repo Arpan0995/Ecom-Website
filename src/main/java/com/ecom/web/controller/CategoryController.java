@@ -17,12 +17,12 @@ public class CategoryController {
     private CategoryServiceImpl categoryService;
 
     @GetMapping("/api/public/category/{id}")
-    public ResponseEntity<Category> getCategory(@PathVariable Integer id) {
+    public ResponseEntity<?> getCategory(@PathVariable Integer id) {
         try {
             Category category = categoryService.getCategory(id);
             return new ResponseEntity<>(category, HttpStatus.OK);
         } catch (ResponseStatusException e) {
-            return new ResponseEntity<>(e.getStatusCode());
+            return new ResponseEntity<>(e.getReason(),e.getStatusCode());
         }
 
     }
